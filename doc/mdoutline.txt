@@ -1,0 +1,116 @@
+*mdoutline.txt*    Markdown outline viewer for Vim
+
+                    MDOUTLINE - TABLE OF CONTENTS
+
+MDOutline provides a NERDTree-like outline viewer for markdown files, showing
+a hierarchical table of contents in a sidebar panel.
+
+==============================================================================
+CONTENTS                                                    *mdoutline-contents*
+
+1. Introduction .................... |mdoutline-introduction|
+2. Installation .................... |mdoutline-installation|
+3. Usage ........................... |mdoutline-usage|
+4. Commands ........................ |mdoutline-commands|
+5. Configuration ................... |mdoutline-configuration|
+6. Mappings ........................ |mdoutline-mappings|
+
+==============================================================================
+1. INTRODUCTION                                        *mdoutline-introduction*
+
+MDOutline is a Vim plugin that provides a sidebar outline view for markdown
+files, similar to how NERDTree provides a file explorer. When you open a
+markdown file, MDOutline can automatically display a hierarchical view of all
+headers in a sidebar panel, allowing you to quickly navigate through your
+document structure.
+
+Features:
+- Automatic outline generation from markdown headers
+- Hierarchical display with proper indentation
+- Quick navigation to any header with Enter or double-click
+- Automatic refresh when the markdown file is saved
+- Configurable sidebar position and width
+- Simple keyboard shortcuts
+
+==============================================================================
+2. INSTALLATION                                        *mdoutline-installation*
+
+Using vim-plug: >
+    Plug 'your-username/mdoutline'
+<
+
+Using Vundle: >
+    Plugin 'your-username/mdoutline'
+<
+
+Using Pathogen: >
+    cd ~/.vim/bundle && git clone https://github.com/your-username/mdoutline.git
+<
+
+==============================================================================
+3. USAGE                                                      *mdoutline-usage*
+
+MDOutline works automatically when you open markdown files. By default, it
+will automatically open the outline sidebar when you open a .md file.
+
+Basic workflow:
+1. Open a markdown file with headers
+2. The outline sidebar appears automatically (if auto_open is enabled)
+3. Navigate through the outline using arrow keys
+4. Press Enter or double-click to jump to a header
+5. The outline updates automatically when you save the file
+
+==============================================================================
+4. COMMANDS                                                *mdoutline-commands*
+
+                                                           *:MDOutlineToggle*
+:MDOutlineToggle        Toggle the outline sidebar open/closed
+
+                                                             *:MDOutlineOpen*
+:MDOutlineOpen          Open the outline sidebar
+
+                                                            *:MDOutlineClose*
+:MDOutlineClose         Close the outline sidebar
+
+                                                          *:MDOutlineRefresh*
+:MDOutlineRefresh       Refresh the outline content
+
+==============================================================================
+5. CONFIGURATION                                      *mdoutline-configuration*
+
+                                                          *g:mdoutline_width*
+g:mdoutline_width       Width of the outline sidebar in columns
+                        Default: 30
+
+                                                       *g:mdoutline_position*
+g:mdoutline_position    Position of the sidebar ('left' or 'right')
+                        Default: 'left'
+
+                                                      *g:mdoutline_auto_open*
+g:mdoutline_auto_open   Automatically open outline when opening markdown files
+                        Default: 1 (enabled)
+
+Example configuration in your .vimrc: >
+    let g:mdoutline_width = 40
+    let g:mdoutline_position = 'right'
+    let g:mdoutline_auto_open = 0
+<
+
+==============================================================================
+6. MAPPINGS                                                *mdoutline-mappings*
+
+Default mapping:
+<Leader>mo              Toggle the outline sidebar
+
+Mappings within the outline window:
+<CR>                    Jump to the header under cursor
+<2-LeftMouse>          Jump to the header under cursor (double-click)
+q                       Close the outline window
+r                       Refresh the outline
+
+You can override the default mapping in your .vimrc: >
+    nmap <Leader>mt :MDOutlineToggle<CR>
+<
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
