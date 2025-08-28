@@ -4,14 +4,14 @@ A NERDTree-like markdown outline viewer for Vim that displays a hierarchical tab
 
 ## Features
 
-- 📋 **Automatic outline generation** from markdown headers (`#`, `##`, `###`, etc.)
-- 🌲 **Hierarchical display** with proper indentation matching header levels  
-- ⚡ **Quick navigation** - jump to any header with Enter or double-click
-- 🔄 **Auto-refresh** when the markdown file is saved
+- **Automatic outline generation** from markdown headers (`#`, `##`, `###`, etc.)
+- **Hierarchical display** with proper indentation matching header levels  
+- **Quick navigation** - jump to any header with Enter or double-click
+- **Auto-refresh** when the markdown file is saved
 - ⚙️ **Configurable** sidebar position (left/right) and width
-- 🎯 **Simple shortcuts** for toggling and navigation
-- ❓ **Built-in help system** - press `?` to toggle help within outline window
-- 🔄 **Smart buffer management** with automatic cleanup and conflict prevention
+- **Simple shortcuts** for toggling and navigation
+- **Built-in help system** - press `?` to toggle help within outline window
+- **Smart buffer management** with automatic cleanup and conflict prevention
 
 ## Installation
 
