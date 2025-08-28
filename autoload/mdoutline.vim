@@ -275,7 +275,7 @@ function! s:get_help_text()
     '" ====== MDOutline Help ======',
     '" ? : toggle this help',
     '" <enter> : jump to header',
-    '" <2-click> : jump to header', 
+    '" <2-click> : jump to header',
     '" r : refresh outline',
     '" q : close outline window',
     '" ============================',
