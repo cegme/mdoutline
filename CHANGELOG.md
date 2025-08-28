@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/cegme/mdoutline/compare/v1.1.1...v1.1.2) (2025-08-28)
+
+
+### Bug Fixes
+
+* rewrite help text function to use explicit list construction ([b92a33d](https://github.com/cegme/mdoutline/commit/b92a33d5d3b4ca031820c6f55991ea1bb0d71e7e))
+
 ## [1.1.1](https://github.com/cegme/mdoutline/compare/v1.1.0...v1.1.1) (2025-08-28)
 
 
