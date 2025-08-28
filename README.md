@@ -10,6 +10,8 @@ A NERDTree-like markdown outline viewer for Vim that displays a hierarchical tab
 - 🔄 **Auto-refresh** when the markdown file is saved
 - ⚙️ **Configurable** sidebar position (left/right) and width
 - 🎯 **Simple shortcuts** for toggling and navigation
+- ❓ **Built-in help system** - press `?` to toggle help within outline window
+- 🔄 **Smart buffer management** with automatic cleanup and conflict prevention
 
 ## Installation
 
@@ -60,13 +62,26 @@ MDOutline works automatically when you open markdown files:
 | `<2-LeftMouse>` | Jump to header (double-click) |
 | `q` | Close outline window |
 | `r` | Refresh outline |
+| `?` | Toggle help text |
+
+### Window Navigation:
+| Mapping | Action |
+|---------|---------|
+| `<Ctrl-w>h` | Move to left window |
+| `<Ctrl-w>l` | Move to right window |
+| `<Ctrl-w>j` | Move to window below |
+| `<Ctrl-w>k` | Move to window above |
+| `<Ctrl-w><Left>` | Move to left window |
+| `<Ctrl-w><Right>` | Move to right window |
+| `<Ctrl-w><Down>` | Move to window below |
+| `<Ctrl-w><Up>` | Move to window above |
 
 ## Configuration
 
 Add these to your `.vimrc`:
 
 ```vim
-" Sidebar width (default: 30)
+" Sidebar width (default: 20)
 let g:mdoutline_width = 40
 
 " Sidebar position: 'left' or 'right' (default: 'left')  
@@ -104,12 +119,51 @@ Here is the other stuff.
 
 The outline sidebar will show:
 ```
+Press ? for help
+
 Introduction
   Getting Started
     Prerequisites  
     Installation
   Usage
+Other stuff
 ```
+
+When you press `?` for help, the outline will display:
+```
+" ====== MDOutline Help ======
+" ? : toggle this help
+" <enter> : jump to header
+" <2-click> : jump to header
+" r : refresh outline
+" q : close outline window
+" ============================
+
+Introduction
+  Getting Started
+    Prerequisites  
+    Installation
+  Usage
+Other stuff
+```
+
+## Development
+
+### Automated Versioning
+
+This plugin uses [semantic-release](https://github.com/semantic-release/semantic-release) for automated version management and releases. All version numbers across `package.json`, `package-lock.json`, and `plugin/mdoutline.vim` are automatically synchronized during releases.
+
+### Commit Message Format
+
+Follow [Conventional Commits](https://www.conventionalcommits.org/) for your commit messages:
+- `feat:` - New features (minor version bump)
+- `fix:` - Bug fixes (patch version bump)
+- `docs:` - Documentation changes (patch version bump)
+- `BREAKING CHANGE:` - Breaking changes (major version bump)
+
+### Releases
+
+Releases are automatically created when commits are pushed to the `main` branch, following semantic versioning based on commit messages.
 
 ## License
 
