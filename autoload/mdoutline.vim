@@ -45,6 +45,7 @@ function! mdoutline#open()
   
   call s:populate_outline()
   call s:setup_mappings()
+  call s:setup_buffer_autocommands()
   
   execute "file MDOutline"
 endfunction
@@ -60,8 +61,10 @@ function! mdoutline#close()
     close
   endif
   
+  " Reset all outline-related variables
   let s:outline_buffer = -1
   let s:outline_window = -1
+  let s:show_help = 0
 endfunction
 
 function! mdoutline#refresh()
@@ -86,7 +89,9 @@ function! mdoutline#auto_open()
 endfunction
 
 function! mdoutline#buffer_cleanup()
-  if s:source_buffer == bufnr('%')
+  " Only clean up if the current buffer is the markdown source buffer,
+  " not the outline buffer itself
+  if s:source_buffer == bufnr('%') && s:source_buffer != s:outline_buffer
     let s:recently_closed = localtime()
     call mdoutline#close()
   endif
@@ -197,6 +202,20 @@ function! s:setup_mappings()
   nnoremap <buffer> <silent> q :call mdoutline#close()<CR>
   nnoremap <buffer> <silent> r :call mdoutline#refresh()<CR>
   nnoremap <buffer> <silent> ? :call <SID>toggle_help()<CR>
+endfunction
+
+function! s:setup_buffer_autocommands()
+  augroup MDOutlineBuffer
+    autocmd! * <buffer>
+    autocmd BufWipeout <buffer> call s:outline_buffer_closed()
+  augroup END
+endfunction
+
+function! s:outline_buffer_closed()
+  " Reset variables when outline buffer is closed directly
+  let s:outline_buffer = -1
+  let s:outline_window = -1
+  let s:show_help = 0
 endfunction
 
 function! s:jump_to_header()
