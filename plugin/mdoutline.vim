@@ -1,14 +1,15 @@
 " mdoutline.vim - Markdown outline viewer for Vim
 " Maintainer: Christan Grant <https://github.com/cegme>
-" Version: 1.0
+" Version: 0.0.0
 
 if exists('g:loaded_mdoutline')
   finish
 endif
 let g:loaded_mdoutline = 1
+let g:mdoutline_version = '0.0.0'
 
 if !exists('g:mdoutline_width')
-  let g:mdoutline_width = 30
+  let g:mdoutline_width = 20
 endif
 
 if !exists('g:mdoutline_position')
@@ -32,4 +33,6 @@ augroup MDOutline
     autocmd BufEnter *.md call mdoutline#auto_open()
   endif
   autocmd BufWritePost *.md call mdoutline#refresh()
+  autocmd BufDelete *.md call mdoutline#buffer_cleanup()
+  autocmd BufWipeout *.md call mdoutline#buffer_cleanup()
 augroup END

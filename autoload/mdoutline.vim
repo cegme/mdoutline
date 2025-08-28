@@ -4,6 +4,7 @@
 let s:outline_buffer = -1
 let s:outline_window = -1
 let s:source_buffer = -1
+let s:show_help = 0
 
 function! mdoutline#toggle()
   if s:is_outline_open()
@@ -84,6 +85,12 @@ function! mdoutline#auto_open()
   endif
 endfunction
 
+function! mdoutline#buffer_cleanup()
+  if s:source_buffer == bufnr('%')
+    call mdoutline#close()
+  endif
+endfunction
+
 function! s:is_outline_open()
   return s:outline_buffer != -1 && bufexists(s:outline_buffer)
 endfunction
@@ -96,20 +103,39 @@ function! s:populate_outline()
   setlocal modifiable
   %delete _
   
+  let lines = []
+  
+  " Add help text if enabled
+  if s:show_help
+    let help_lines = s:get_help_text()
+    call extend(lines, help_lines)
+  endif
+  
   let headers = s:get_headers()
   
   if empty(headers)
-    call setline(1, "No headers found")
-    setlocal nomodifiable
-    return
+    if !s:show_help
+      call add(lines, "No headers found")
+      if len(lines) == 0
+        call add(lines, "Press ? for help")
+      endif
+    else
+      call add(lines, "No headers found")
+    endif
+  else
+    " Add header lines
+    for header in headers
+      let indent = repeat('  ', header.level - 1)
+      let line = indent . header.text
+      call add(lines, line)
+    endfor
   endif
   
-  let lines = []
-  for header in headers
-    let indent = repeat('  ', header.level - 1)
-    let line = indent . header.text
-    call add(lines, line)
-  endfor
+  " Add help hint if not showing help and there are headers
+  if !s:show_help && !empty(headers)
+    call insert(lines, "Press ? for help", 0)
+    call insert(lines, "", 1)
+  endif
   
   call setline(1, lines)
   setlocal nomodifiable
@@ -150,19 +176,29 @@ function! s:setup_mappings()
   nnoremap <buffer> <silent> <2-LeftMouse> :call <SID>jump_to_header()<CR>
   nnoremap <buffer> <silent> q :call mdoutline#close()<CR>
   nnoremap <buffer> <silent> r :call mdoutline#refresh()<CR>
+  nnoremap <buffer> <silent> ? :call <SID>toggle_help()<CR>
 endfunction
 
 function! s:jump_to_header()
-  if !exists('b:mdoutline_headers')
+  if !exists('b:mdoutline_headers') || s:show_help
     return
   endif
   
   let current_line = line('.')
-  if current_line > len(b:mdoutline_headers)
+  let offset_lines = 0
+  
+  " Account for help hint lines when not showing full help
+  if !s:show_help && !empty(b:mdoutline_headers)
+    let offset_lines = 2  " "Press ? for help" + empty line
+  endif
+  
+  let header_line = current_line - offset_lines
+  
+  if header_line <= 0 || header_line > len(b:mdoutline_headers)
     return
   endif
   
-  let header = b:mdoutline_headers[current_line - 1]
+  let header = b:mdoutline_headers[header_line - 1]
   let source_win = bufwinnr(s:source_buffer)
   
   if source_win != -1
@@ -170,4 +206,26 @@ function! s:jump_to_header()
     execute header.line_nr
     normal! zz
   endif
+endfunction
+
+function! s:toggle_help()
+  let s:show_help = !s:show_help
+  call s:populate_outline()
+endfunction
+
+function! s:get_help_text()
+  return [
+    '" ====== MDOutline Help ======',
+    '" ? : toggle this help',
+    '" <enter> : jump to header',
+    '" <2-click> : jump to header', 
+    '" r : refresh outline',
+    '" q : close outline window',
+    '" ============================',
+    ''
+  ]
+endfunction
+
+function! s:get_help_line_count()
+  return len(s:get_help_text())
 endfunction
