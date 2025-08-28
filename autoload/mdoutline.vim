@@ -80,19 +80,39 @@ function! mdoutline#refresh()
 endfunction
 
 function! mdoutline#auto_open()
-  if &filetype == 'markdown' && !s:is_outline_open()
+  if &filetype == 'markdown' && !s:is_outline_open() && s:can_open_outline()
     call mdoutline#open()
   endif
 endfunction
 
 function! mdoutline#buffer_cleanup()
   if s:source_buffer == bufnr('%')
+    let s:recently_closed = localtime()
     call mdoutline#close()
   endif
 endfunction
 
 function! s:is_outline_open()
   return s:outline_buffer != -1 && bufexists(s:outline_buffer)
+endfunction
+
+function! s:can_open_outline()
+  " Don't open if we're in the middle of closing windows
+  if exists('g:leaving') && g:leaving
+    return 0
+  endif
+  
+  " Don't open if there's only one window (likely closing the last one)
+  if winnr('$') == 1 && winwidth(0) < 50
+    return 0
+  endif
+  
+  " Don't open immediately after a buffer delete/wipe event
+  if exists('s:recently_closed') && (localtime() - s:recently_closed) < 1
+    return 0
+  endif
+  
+  return 1
 endfunction
 
 function! s:populate_outline()
