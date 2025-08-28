@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/cegme/mdoutline/compare/v1.0.1...v1.1.0) (2025-08-28)
+
+
+### Features
+
+* enhance semantic release workflow and fix buffer management ([aa3f582](https://github.com/cegme/mdoutline/commit/aa3f5828c0725fe85fb2dc1051ae5db8df52edb4))
+
 ## [1.0.1](https://github.com/cegme/mdoutline/compare/v1.0.0...v1.0.1) (2025-08-28)
 
 
