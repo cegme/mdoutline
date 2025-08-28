@@ -1,12 +1,12 @@
 " mdoutline.vim - Markdown outline viewer for Vim
 " Maintainer: Christan Grant <https://github.com/cegme>
-" Version: 1.1.2
+" Version: 1.1.3
 
 if exists('g:loaded_mdoutline')
   finish
 endif
 let g:loaded_mdoutline = 1
-let g:mdoutline_version = '1.1.2'
+let g:mdoutline_version = '1.1.3'
 
 if !exists('g:mdoutline_width')
   let g:mdoutline_width = 20
