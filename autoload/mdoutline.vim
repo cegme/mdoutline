@@ -43,6 +43,9 @@ function! mdoutline#open()
   setlocal nocursorcolumn
   setlocal winfixwidth
   
+  " Mark this as an outline buffer
+  let b:mdoutline_buffer = 1
+  
   call s:populate_outline()
   call s:setup_mappings()
   call s:setup_buffer_autocommands()
@@ -83,15 +86,26 @@ function! mdoutline#refresh()
 endfunction
 
 function! mdoutline#auto_open()
+  " Skip if we're in the outline buffer itself
+  if exists('b:mdoutline_buffer') && b:mdoutline_buffer
+    return
+  endif
+  
   if &filetype == 'markdown' && !s:is_outline_open() && s:can_open_outline()
     call mdoutline#open()
   endif
 endfunction
 
 function! mdoutline#buffer_cleanup()
-  " Only clean up if the current buffer is the markdown source buffer,
-  " not the outline buffer itself
-  if s:source_buffer == bufnr('%') && s:source_buffer != s:outline_buffer
+  let current_buf = bufnr('%')
+  
+  " Only clean up if:
+  " 1. The current buffer is the markdown source buffer
+  " 2. The current buffer is not the outline buffer itself
+  " 3. The outline buffer actually exists and is open
+  if current_buf == s:source_buffer && 
+     \ current_buf != s:outline_buffer && 
+     \ s:is_outline_open()
     let s:recently_closed = localtime()
     call mdoutline#close()
   endif
@@ -213,9 +227,13 @@ endfunction
 
 function! s:outline_buffer_closed()
   " Reset variables when outline buffer is closed directly
-  let s:outline_buffer = -1
-  let s:outline_window = -1
-  let s:show_help = 0
+  " Only reset if this is actually our outline buffer
+  if bufnr('%') == s:outline_buffer
+    let s:outline_buffer = -1
+    let s:outline_window = -1
+    let s:show_help = 0
+    let s:recently_closed = localtime()
+  endif
 endfunction
 
 function! s:jump_to_header()

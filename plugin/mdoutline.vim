@@ -33,6 +33,5 @@ augroup MDOutline
     autocmd BufEnter *.md call mdoutline#auto_open()
   endif
   autocmd BufWritePost *.md call mdoutline#refresh()
-  autocmd BufDelete *.md call mdoutline#buffer_cleanup()
-  autocmd BufWipeout *.md call mdoutline#buffer_cleanup()
+  autocmd BufDelete,BufWipeout *.md call mdoutline#buffer_cleanup()
 augroup END
