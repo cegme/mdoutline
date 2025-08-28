@@ -97,6 +97,9 @@ Steps...
 
 ## Usage
 How to use...
+
+# Other stuff
+Here is the other stuff.
 ```
 
 The outline sidebar will show:
