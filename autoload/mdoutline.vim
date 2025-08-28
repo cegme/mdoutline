@@ -271,16 +271,16 @@ function! s:toggle_help()
 endfunction
 
 function! s:get_help_text()
-  return [
-    '" ====== MDOutline Help ======',
-    '" ? : toggle this help',
-    '" <enter> : jump to header',
-    '" <2-click> : jump to header',
-    '" r : refresh outline',
-    '" q : close outline window',
-    '" ============================',
-    ''
-  ]
+  let help_lines = []
+  call add(help_lines, '" ====== MDOutline Help ======')
+  call add(help_lines, '" ? : toggle this help')
+  call add(help_lines, '" <enter> : jump to header')
+  call add(help_lines, '" <2-click> : jump to header')
+  call add(help_lines, '" r : refresh outline')
+  call add(help_lines, '" q : close outline window')
+  call add(help_lines, '" ============================')
+  call add(help_lines, '')
+  return help_lines
 endfunction
 
 function! s:get_help_line_count()
