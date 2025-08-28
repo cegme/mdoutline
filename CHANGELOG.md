@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/cegme/mdoutline/compare/v1.0.0...v1.0.1) (2025-08-28)
+
+
+### Bug Fixes
+
+* prevent window splitting error during buffer operations ([0eb1c8a](https://github.com/cegme/mdoutline/commit/0eb1c8a30c713ce0cfc465b33cef30022d4cf82d))
+* resolve buffer closing errors and improve cleanup logic ([f44190a](https://github.com/cegme/mdoutline/commit/f44190ab9ae69567cc605b5081cdc2a5437b21be))
+
 ## 1.0.0 (2025-08-28)
 
 
