@@ -1,3 +1,10 @@
+## [1.2.0](https://github.com/cegme/mdoutline/compare/v1.1.3...v1.2.0) (2025-08-29)
+
+
+### Features
+
+* auto-close MDOutline buffer when last main buffer is closed ([74b89c5](https://github.com/cegme/mdoutline/commit/74b89c5b32eb798b8b2966fe8d0fb25cba8c5f83))
+
 ## [1.1.3](https://github.com/cegme/mdoutline/compare/v1.1.2...v1.1.3) (2025-08-28)
 
 ## [1.1.2](https://github.com/cegme/mdoutline/compare/v1.1.1...v1.1.2) (2025-08-28)
