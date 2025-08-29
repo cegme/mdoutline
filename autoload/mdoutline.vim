@@ -111,6 +111,24 @@ function! mdoutline#buffer_cleanup()
   endif
 endfunction
 
+function! mdoutline#check_last_buffer()
+  " Skip if outline is not open
+  if !s:is_outline_open()
+    return
+  endif
+  
+  " Skip if the buffer being closed is the outline buffer itself
+  if bufnr('%') == s:outline_buffer
+    return
+  endif
+  
+  " Check if any main buffers remain (excluding special buffers)
+  if !s:has_main_buffers()
+    let s:recently_closed = localtime()
+    call mdoutline#close()
+  endif
+endfunction
+
 function! s:is_outline_open()
   return s:outline_buffer != -1 && bufexists(s:outline_buffer)
 endfunction
@@ -132,6 +150,46 @@ function! s:can_open_outline()
   endif
   
   return 1
+endfunction
+
+function! s:has_main_buffers()
+  " Check if there are any buffers that are considered "main" buffers
+  " (i.e., not special buffers like outline, help, quickfix, etc.)
+  for bufnr in range(1, bufnr('$'))
+    if !buflisted(bufnr) || !bufexists(bufnr)
+      continue
+    endif
+    
+    " Skip the outline buffer itself
+    if bufnr == s:outline_buffer
+      continue
+    endif
+    
+    " Get buffer info
+    let buftype = getbufvar(bufnr, '&buftype', '')
+    let filetype = getbufvar(bufnr, '&filetype', '')
+    
+    " Skip special buffer types
+    if buftype == 'nofile' || buftype == 'quickfix' || buftype == 'help'
+      continue
+    endif
+    
+    " Skip certain special filetypes
+    if filetype == 'qf' || filetype == 'help' || filetype == 'netrw'
+      continue
+    endif
+    
+    " Skip buffers marked as outline buffers
+    if getbufvar(bufnr, 'mdoutline_buffer', 0)
+      continue
+    endif
+    
+    " Found a main buffer
+    return 1
+  endfor
+  
+  " No main buffers found
+  return 0
 endfunction
 
 function! s:populate_outline()

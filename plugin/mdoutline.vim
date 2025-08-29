@@ -34,4 +34,5 @@ augroup MDOutline
   endif
   autocmd BufWritePost *.md call mdoutline#refresh()
   autocmd BufDelete,BufWipeout *.md call mdoutline#buffer_cleanup()
+  autocmd BufDelete,BufWipeout * call mdoutline#check_last_buffer()
 augroup END
